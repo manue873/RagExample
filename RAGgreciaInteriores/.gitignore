@@ -1,0 +1,23 @@
+# Variables de entorno y secretos (NUNCA subir a Git)
+.env
+
+# Entornos virtuales Python
+.venv/
+venv/
+env/
+
+# Caché de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDEs y editores
+.vscode/
+.idea/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

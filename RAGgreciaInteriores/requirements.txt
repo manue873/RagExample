@@ -1,0 +1,21 @@
+# Backend RAG - GRECIA INTERIORES S.A.C.
+# Dependencias principales del servidor y orquestación de IA
+
+fastapi>=0.115.0
+uvicorn>=0.30.0
+pydantic>=2.8.0
+python-dotenv>=1.0.0
+
+# LangChain y componentes vectoriales
+langchain>=0.2.0
+langchain-core>=0.2.0
+langchain-community>=0.2.0
+langchain-chroma>=0.1.0
+langchain-groq>=0.1.0
+
+# Embeddings y base de datos vectorial
+sentence-transformers>=3.0.0
+chromadb>=0.5.0
+
+# Control de tráfico y rate limiting por IP
+slowapi>=0.1.9

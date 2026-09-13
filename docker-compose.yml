@@ -1,0 +1,48 @@
+services:
+  # Servicio Backend RAG (FastAPI + ChromaDB + Groq Cloud)
+  rag-backend:
+    build:
+      context: ./RAGgreciaInteriores
+      dockerfile: Dockerfile
+    container_name: ragmodel-backend
+    restart: unless-stopped
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GROQ_MODEL=${GROQ_MODEL:-qwen/qwen3.8-27b}
+      - RATE_LIMIT_PER_MINUTE=${RATE_LIMIT_PER_MINUTE:-5/minute}
+      - RATE_LIMIT_PER_HOUR=${RATE_LIMIT_PER_HOUR:-30/hour}
+    volumes:
+      - ./RAGgreciaInteriores/knowledge_base:/app/knowledge_base
+      - ./RAGgreciaInteriores/chroma_db:/app/chroma_db
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    networks:
+      - ragmodel-network
+
+  # Servicio Frontend (Next.js Landing Page + Chat Widget)
+  landing-page:
+    build:
+      context: ./GreciaInterioresLandingPage
+      dockerfile: Dockerfile
+    container_name: ragmodel-frontend
+    restart: unless-stopped
+    environment:
+      - RAG_STREAM_URL=http://rag-backend:8000/api/chat/stream
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+    depends_on:
+      rag-backend:
+        condition: service_healthy
+    networks:
+      - ragmodel-network
+
+networks:
+  ragmodel-network:
+    driver: bridge
