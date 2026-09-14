@@ -68,7 +68,7 @@ El proyecto cuenta con configuración de Docker Compose para desplegar ambos ser
 1. Clonar el repositorio y situarse en el directorio principal:
    ```bash
    git clone https://github.com/manue873/RagExample
-   cd RAGModel
+   cd RagExample
    ```
 
 2. Levantar los contenedores:
